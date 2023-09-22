@@ -42,13 +42,13 @@ public class Base {
 			driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 			
 		} else if(browserName.equalsIgnoreCase("firefox")){
-			WebDriverManager.firefoxdriver().setup();
+			//WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 			driver.manage().window().maximize();
 			driver.manage().deleteAllCookies();
 			
 		}else if(browserName.equalsIgnoreCase("edge")){
-			WebDriverManager.edgedriver().setup();			
+			//WebDriverManager.edgedriver().setup();			
 			driver = new EdgeDriver();
 			driver.manage().window().maximize();
 			driver.manage().deleteAllCookies();
