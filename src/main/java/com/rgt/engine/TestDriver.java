@@ -102,7 +102,7 @@ public class TestDriver
 	//public final String SCENARIO_SHEET_PATH = "/resources/datafiles/"+SCENARIO_SHEET_PATH1;
 	//public final String SCENARIO_SHEET_PATH = System.getenv("BUILD_ID");
 	//public final String SCENARIO_SHEET_PATH = System.getProperty("user.dir")+"/resources/datafiles/TC_Master.xlsx";
-	public final String SCENARIO_SHEET_PATH = System.getProperty("TestDatafile");
+	public final String SCENARIO_SHEET_PATH = System.getenv("TC_Master.xlsx");
 	public final String ExtentReport_Path = System.getProperty("user.dir")+"/resources/reports/WebAutomationReport.html";
 	public final String ExcelReport_Path = System.getProperty("user.dir")+"/resources/reports/ExcelReport.xlsx";
 
