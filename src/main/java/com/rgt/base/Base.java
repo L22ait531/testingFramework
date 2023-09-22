@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Properties;
 
@@ -17,28 +18,36 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Base {
 
-	public static WebDriver driver;
+	public WebDriver driver;
 	public Properties prop;
 
 	public WebDriver init_driver(String browserName){
-		if(browserName.equals("chrome")){
-			driver = new ChromeDriver();
+		if(browserName.equalsIgnoreCase("chrome")){
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--remote-allow-origins=*");
+//			options.addArguments("--disable notifications");
+//			DesiredCapabilities cp = new DesiredCapabilities();
+//			cp.setCapability(ChromeOptions.CAPABILITY, options);
+//			options.merge(cp);
+			driver = new ChromeDriver(options);
 			driver.manage().window().maximize();
 			driver.manage().deleteAllCookies();
+			driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 			
-		} else if(browserName.equals("firefox")){
+		} else if(browserName.equalsIgnoreCase("firefox")){
 			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 			driver.manage().window().maximize();
 			driver.manage().deleteAllCookies();
 			
-		}else if(browserName.equals("edge")){
+		}else if(browserName.equalsIgnoreCase("edge")){
 			WebDriverManager.edgedriver().setup();			
 			driver = new EdgeDriver();
 			driver.manage().window().maximize();

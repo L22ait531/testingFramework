@@ -86,7 +86,7 @@ import com.rgt.utils.ExcelUtils;
 
 public class TestDriver
 {
-	public WebDriver driver;
+	
 	public Properties prop;
 	public ExcelUtils excel;
 	public Base base;
@@ -108,10 +108,9 @@ public class TestDriver
 
 	public void startExecution() throws IOException, DocumentException {
 	//public void startExecution(String tc_master) throws IOException, DocumentException {
+		WebDriver driver = null;
 		commonUtils= new CommonUtils();
-		extentreport = new ExtentReports();
-		System.out.println(SCENARIO_SHEET_PATH);
-		
+		extentreport = new ExtentReports();		
 		spark = new ExtentSparkReporter(ExtentReport_Path).viewConfigurer().viewOrder().as(new ViewName[] {ViewName.TEST,ViewName.DASHBOARD,ViewName.CATEGORY,ViewName.DEVICE,ViewName.EXCEPTION }).apply();
 		spark.config().setTheme(Theme.DARK);
 		spark.config().setDocumentTitle("Functional Test");
@@ -123,8 +122,6 @@ public class TestDriver
 		extentreport.setSystemInfo("User", "sairamprince33@gmail.com");
 		extentreport.setSystemInfo("OS", System.getProperty("os.name"));
 		extentreport.setSystemInfo("Java Version", System.getProperty("java.version"));
-
-		//excel = new ExcelUtils(System.getenv("TestDatafile"));
 		excel = new ExcelUtils(SCENARIO_SHEET_PATH);
 		int testCaseCount = excel.getTCMaster().size();
 		System.out.println("Number of TestCases to be Executing = "+testCaseCount);
