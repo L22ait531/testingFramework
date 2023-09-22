@@ -12,8 +12,9 @@ import com.rgt.engine.TestDriver;
 public class WebTest
 {
 	
-	@Test
+	
 	//@Parameters("TestDatafile")
+	@Test
 	public void runner() throws IOException, InterruptedException, DocumentException
 	
 	//public void runner() throws IOException, InterruptedException, DocumentException
