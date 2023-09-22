@@ -111,6 +111,7 @@ public class TestDriver
 		commonUtils= new CommonUtils();
 		extentreport = new ExtentReports();
 		System.out.println(tc_master);
+		
 		spark = new ExtentSparkReporter(ExtentReport_Path).viewConfigurer().viewOrder().as(new ViewName[] {ViewName.TEST,ViewName.DASHBOARD,ViewName.CATEGORY,ViewName.DEVICE,ViewName.EXCEPTION }).apply();
 		spark.config().setTheme(Theme.DARK);
 		spark.config().setDocumentTitle("Functional Test");
@@ -123,7 +124,7 @@ public class TestDriver
 		extentreport.setSystemInfo("OS", System.getProperty("os.name"));
 		extentreport.setSystemInfo("Java Version", System.getProperty("java.version"));
 
-		excel = new ExcelUtils(tc_master);
+		excel = new ExcelUtils(System.getenv("TestDatafile"));
 		//excel = new ExcelUtils(SCENARIO_SHEET_PATH);
 		int testCaseCount = excel.getTCMaster().size();
 		System.out.println("Number of TestCases to be Executing = "+testCaseCount);
