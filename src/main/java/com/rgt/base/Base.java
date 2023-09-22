@@ -32,10 +32,10 @@ public class Base {
 		if(browserName.equalsIgnoreCase("chrome")){
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("--remote-allow-origins=*");
-//			options.addArguments("--disable notifications");
-//			DesiredCapabilities cp = new DesiredCapabilities();
-//			cp.setCapability(ChromeOptions.CAPABILITY, options);
-//			options.merge(cp);
+			//options.addArguments("--disable notifications");
+			DesiredCapabilities cp = new DesiredCapabilities();
+			cp.setCapability(ChromeOptions.CAPABILITY, options);
+			options.merge(cp);
 			driver = new ChromeDriver(options);
 			driver.manage().window().maximize();
 			driver.manage().deleteAllCookies();

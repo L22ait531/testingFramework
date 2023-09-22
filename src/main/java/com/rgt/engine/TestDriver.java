@@ -1,7 +1,5 @@
 package com.rgt.engine;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,36 +7,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import com.aventstack.*;
-import com.aventstack.extentreports.io.BufferedWriterWriter;
-
-import javax.imageio.ImageIO;
-import javax.lang.model.util.Elements;
-
 import org.apache.commons.io.FileUtils;
-
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-
-import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -46,33 +25,19 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.util.IOUtils;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jsoup.Jsoup;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.ITestListener;
-import org.testng.annotations.Test;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.model.Media;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Protocol;
 import com.aventstack.extentreports.reporter.configuration.Theme;
@@ -95,10 +60,6 @@ public class TestDriver {
 	Select selectDropDown;
 	Actions act;
 
-//	public final String SCENARIO_SHEET_PATH1 = System.getenv("resources/datafiles/TC_Master.xlsx");
-	// public final String SCENARIO_SHEET_PATH =
-	// "/resources/datafiles/"+SCENARIO_SHEET_PATH1;
-	// public final String SCENARIO_SHEET_PATH = System.getenv("BUILD_ID");
 	// public final String SCENARIO_SHEET_PATH =
 	// System.getProperty("user.dir")+"/resources/datafiles/TC_Master.xlsx";
 	public final String SCENARIO_SHEET_PATH = System.getProperty("user.dir") + "/TC_Master.xlsx";
@@ -107,8 +68,6 @@ public class TestDriver {
 	public final String ExcelReport_Path = System.getProperty("user.dir") + "/resources/reports/ExcelReport.xlsx";
 
 	public void startExecution() throws IOException, DocumentException {
-		// public void startExecution(String tc_master) throws IOException,
-		// DocumentException {
 		WebDriver driver = null;
 		commonUtils = new CommonUtils();
 		extentreport = new ExtentReports();
@@ -141,12 +100,9 @@ public class TestDriver {
 		try {
 			FileInputStream fileInputStream = new FileInputStream(new File(ExtentReport_Path));
 			Document document = Jsoup.parse(fileInputStream, "UTF-8", "");
-
 			org.jsoup.select.Elements tableRows = document.select("table tr");
-
 			Workbook workbook = new XSSFWorkbook();
 			Sheet sheet = workbook.createSheet("Report");
-
 			Row headerRow = sheet.createRow(0);
 			Cell testCaseNameHeader = headerRow.createCell(0);
 			testCaseNameHeader.setCellValue("OPEN BOWSER");
@@ -185,7 +141,7 @@ public class TestDriver {
 		for (int j = 0; j < testCaseCount; j++) {
 			extentTest = extentreport.createTest(excel.getTCMaster().get(j).getTestCase());
 			int count = excel.getTestSteps(excel.getTCMaster().get(j).getTC_ID()).size();
-			System.out.println("Number of TestSteps to be Executing = " + count);
+			
 			for (int i = 0; i < count; i++) {
 				try {
 					switch (excel.getTestSteps(excel.getTCMaster().get(j).getTC_ID()).get(i).getAction().trim()) {
@@ -898,7 +854,9 @@ public class TestDriver {
 //							excel.getTestSteps(excel.getTCMaster().get(j).getTC_ID()).get(i).getTestSteps().trim()
 //									+ "  is Failed",
 //							ExtentColor.RED)).toString();
-					extentTest.fail(MarkupHelper.createCodeBlock("=========="+excel.getTestSteps(excel.getTCMaster().get(j).getTC_ID()).get(i).getTestSteps().trim()+ " step failed"+"=========="+e.toString())).toString();
+					extentTest.fail(MarkupHelper.createCodeBlock("=========="
+							+ excel.getTestSteps(excel.getTCMaster().get(j).getTC_ID()).get(i).getTestSteps().trim()
+							+ " step failed" + "==========" + e.toString())).toString();
 					SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd_HHmmss");
 					String timeandDate1 = dateFormat1.format(new Date());
 					String screenshotPath = "Failed-Screenshots/Failed_Screenshot_" + timeandDate1 + ".png";
@@ -907,7 +865,8 @@ public class TestDriver {
 					byte[] screenshotBytes = Files.readAllBytes(screenshotFile.toPath());
 					base64String = Base64.getEncoder().encodeToString(screenshotBytes);
 					FileUtils.copyFile(screenshotFile, new File(screenshotPath));
-					extentTest.fail("Failed Step Screenshot",MediaEntityBuilder.createScreenCaptureFromBase64String(base64String).build());
+					extentTest.fail("Failed Step Screenshot",
+							MediaEntityBuilder.createScreenCaptureFromBase64String(base64String).build());
 
 //					try {
 //						//byte[] screenshotBytes = Files.readAllBytes(screenshotFile.toPath());
